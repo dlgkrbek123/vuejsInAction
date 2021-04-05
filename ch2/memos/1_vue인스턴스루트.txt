@@ -1,0 +1,28 @@
+- 모든 vue app의 중심에는 root 인스턴스가 있다.
+- new Vue로 root instance를 생성한다.
+
+- 생성자는 html을 컴파일 + 인스턴스 데이터를 초기화 + 바인딩
+
+new Vue({
+  el,
+  data
+
+  /* 나머지 */
+})
+
+- el : Vue가 적용될 dom을 지정
+
+- data : state
+- v-text로 state를 text로 출력
+- innerHTML영역에 {{}}를 이용해 바인딩
+
+- v-html 지시자로 innerHTML에 node를 전달 가능
+
+- v-bind를 사용해서 html attribute를 바인딩
+- v-bind의 앞을 생략하여 사용가능  => <img :src="p" />
+
+------------------------------------------------------------------------
+
+- 애플리케이션이 초기화될때 getter, setter가 생성
+- 추가적인 코드없이 인스턴스의 현재 속성을 조회
+- webstore.sitename = '엄준식' // setState 발생, 데이터바인딩이 갱신
