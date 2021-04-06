@@ -1,0 +1,34 @@
+- v-model => 폼과 템플릿에 양방향 데이터바인딩을 생성
+- UI와 data가 동기화
+
+
+- 폼을 위해 구현됨
+- input이나 select에 바인딩!
+- v-model은 내부적으로 v-bind를 사용한다.
+
+<input v-model="something />
+<input :value="something" v-on:input="something=$event.target" />
+
+----------------------------------------------------------------------
+
+v-model이 checkbox에 바인딩시 true / false로 연결될 수 있다.
+v-bind:true-value="상수"
+true / false이외의 값으로 설정이 가능하게 한다!!
+
+
+type="checkbox"
+v-bind:true-value="order.sendGift"
+v-bind:false-value="order.dontSendGift"
+v-model="order.gift"
+
+----------------------------------------------------------------------
+
+radio는 기본적으로는 아래처럼 쓸 수 있다.
+value를 바인딩해서 원하는 값으로 조작가능하다.
+
+<input type="radio" id="home" value="Home" v-model="order.method" />
+<input type="radio" id="business" :value="order.business" v-model="order.method" />
+
+----------------------------------------------------------------------
+
+- .number .trim, .lazy등의 수식어를 사용해 v-model의 기능을 강화
