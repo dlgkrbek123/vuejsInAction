@@ -1,0 +1,32 @@
+- 현재 state를 UI 표현을 위해 정제한 값
+- 인스턴스에서 계산된 속성을 정의한다.
+- DOM에 바인딩된다.
+
+
+- data      => state ( 성과 이름 )
+- computed  => useMemo ( 성명 )
+- data가 변하면 자동으로 업데이트된다.
+
+computed: {
+  fullName: function() {
+    return [this.firstName, this.lastName].join(' ')
+  }
+}
+
+---------------------------------------
+
+- data 변이
+- computed 재연산
+- data가 바뀌고 가상 dom을 리렌더링하기 직전에 beforeUpdate 호출
+- 가상 dom 리렌더링 => 리얼 dom 재조정
+- updated 호출
+
+---------------------------------------
+
+- watch옵션을 사용해서 data가 변하는 것을 감시
+
+watch: {
+  length: function(newVal, oldVal) {
+    console.log(oldVal, newVal)
+  }
+}

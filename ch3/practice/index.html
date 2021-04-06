@@ -9,22 +9,33 @@
 </head>
 <body>
   <div id="app">
-    <header>
-      <h1 v-text="sitename"></h1>
-      <p>Welcome to {{sitename}}</p>
+    <header class="navbar-default">
+      <div class="navbar">
+        <h1 v-text="sitename"></h1>
+      </div>
+      <div class="nav navbar-nav navbar-right cart">
+        <button type="button" class="btn btn-default btn-lg" v-on:click="showCheckout"> <span
+            class="glyphicon glyphicon-shopping-cart">{{cartItemCount}}</span> <span>체크아웃</span>
+        </button>
+      </div>
     </header>
     <main>
       <div class="row product">
-        <div class="col">
-          <figure>
-            <img v-bind:src="product.image" />
-          </figure>
+        <div v-if="showProduct">
+          <div class="col">
+            <figure>
+              <img v-bind:src="product.image" />
+            </figure>
+          </div>
+          <div class="col col-expand">
+            <h1 v-text="product.title"></h1>
+            <p class="description" v-html="product.description"></p>
+            <p class="price">{{product.price | formatPrice}}</p>
+          </div>
+          <button class="btn btn-primary btn-lg" v-if="canAddToCart" v-on:click="addToCart">장바구니 담기</button>
+          <button class="btn btn-primary btn-lg" v-else disabled>장바구니 담기</button>
         </div>
-        <div class="col col-expand">
-          <h1 v-text="product.title"></h1>
-          <p class="description" v-html="product.description"></p>
-          <p class="price">{{product.price | formatPrice}}</p>
-        </div>
+        <div v-else>엄준식</div>
       </div>
     </main>
 
@@ -34,13 +45,16 @@
       el: "#app",
       data: {
         sitename: 'Vue.js 애완용품샾',
+        showProduct: true,
         product: {
           id: 1001,
           title: '고양이 사료, 25파운드',
           description: `당신의 고양이를 위한 <em>거부할 수 없는</em>,유기농 25파운드 사료입니다.`,
           price: 2000,
-          image: 'assets/images/product-fullsize.png'
-        }
+          image: 'assets/images/product-fullsize.png',
+          availableInventory: 5
+        },
+        cart: []
       },
       filters: {
         formatPrice: function (price) {
@@ -59,6 +73,23 @@
           } else {
             return `$${(price / 100).toFixed(2)}`
           }
+        }
+      },
+      methods: {
+        addToCart() {
+          // this를 통해 data에 접근
+          this.cart.push(this.product.id)
+        },
+        showCheckout() {
+          this.showProduct = !this.showProduct
+        }
+      },
+      computed: {
+        cartItemCount: function () {
+          return this.cart.length || "";
+        },
+        canAddToCart: function () {
+          return this.product.availableInventory > this.cartItemCount
         }
       },
       beforeCreate: function () {

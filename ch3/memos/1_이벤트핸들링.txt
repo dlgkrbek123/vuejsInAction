@@ -1,0 +1,13 @@
+- Vue 인스턴스에서 정의한 함수를 DOM요소에 연결
+- v-on 지시자를 사용해서 이벤트 핸들러를 부착
+
+<p v-on:click="clickHappend">엄준식</p>
+<p v-on:click="age = age - 1">엄준식</p>
+
+- v-on은 @로 간략화 가능
+
+<p @click="clickHappend">엄준식</p>
+
+----------------------------------------
+
+- app옵션에 methods옵션을 추가하여 인스턴스에서 사용할 함수를 정의

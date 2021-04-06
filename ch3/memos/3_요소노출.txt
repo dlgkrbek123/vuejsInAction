@@ -1,0 +1,14 @@
+- v-show
+- 지정된 조건이 참인경우에만 렌더링
+- 거짓이면 display: none 처리
+
+<button class="btn btn-primary btn-lg" v-show="canAddToCart" v-on:click="addToCart">장바구니 담기</button>
+
+-------------------------------
+
+- v-if + v-else
+- boolean값에 따라 두가지 선택중 하나를 표시
+- v-if와 v-else은 연속하게 위치해야함
+
+<button class="btn btn-primary btn-lg" v-if="canAddToCart" v-on:click="addToCart">장바구니 담기</button>
+<button class="btn btn-primary btn-lg" v-else disabled>장바구니 담기</button>
