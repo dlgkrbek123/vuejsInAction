@@ -1,0 +1,37 @@
+- 일반적인 이벤트와 다르게 커스텀 이벤트가 있다
+- 부모에서 자식으로 이벤트 넘겨줄때 사용
+
+- $on으로 수신 (부모자식간 아닌 컴포넌트간 송신, 부모자식은 v-on)
+- $emit으로 트리거
+
+<div id="app">
+  {{counter}}<br />
+  <button @click="incrementCounter">카운터증가</button>
+  <my-component @increment-me="incrementCounter"></my-component>
+</div>
+
+const MyComponent = {
+  template: `
+    <div>
+      <button @click="childIncrementCounter">증가</button>
+    </div>
+  `,
+  methods: {
+    childIncrementCounter() {
+      this.$emit('increment-me')
+    }
+  }
+}
+
+new Vue({
+  el: "#app",
+  data() {
+    return { counter: 0 }
+  },
+  methods: {
+    incrementCounter() {
+      this.counter++;
+    }
+  },
+  components: {'my-component': MyComponent}
+})

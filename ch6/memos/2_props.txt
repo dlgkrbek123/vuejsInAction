@@ -1,0 +1,98 @@
+- 컴포넌트 관계
+
+- 부모가 자식에 props를 내려준다 ( 단방향 플로우 )
+- 내려주는 props만 사용하며 부모 데이터에 직접 접근은 불가능
+- 실수로 부모 state를 변이시키는 것을 방지
+- 이벤트를 이용해서 자식이 부모의 state변화를 유도
+
+------------------------------------------------------------------------
+
+- 리터럴 속성
+- 컴포넌트에 전달가능한 단순 문자열
+
+<my-component text="World"></my-component>
+
+const MyComponent = {
+  template: '<div>안녕 {{text}}</div>',
+  props: ['text']
+}
+
+new Vue({
+  el: "#app",
+  components: {
+    'my-component': MyComponent
+  }
+})
+
+------------------------------------------------------------------------
+
+- 동적 속성
+- 변경될 수 있는 속성을 가지고 있는 부모에게서 전달받은 속성
+- v-bind지시자로 올바르게 전달됬는지 확인
+
+<my-component :text="message"></my-component>
+
+const MyComponent= {
+  template: '<div>안녕 {{text}}! {{testter1}}</div>',
+  props: ['text'],
+  data() {
+    return {
+        counter: 0
+    }
+  }
+}
+
+new Vue({
+  el "#app",
+  component : {
+    'my-component': MyComponent
+  },
+  data() {
+    return {
+      message: "부모 컴포넌트로부터"
+    }
+  }
+})
+
+------------------------------------------------------------------------
+
+- 속성 검증
+- 부모로부터 받은 props의 유효성 여부를 검증
+- 개발자 콘솔에서만 에러보여줌, 실제 에러는 아님
+
+props를 객체로 설정하자
+- required
+- default
+- validator = value => boolean
+
+<my-component 
+  :num="myNumber" 
+  :str="passedString" 
+  :even="myNumber" 
+  :obj="passedObject">
+</my-component>
+
+const MyComponent = {
+  template: '<div>{{num}} {{str}} {{even}} {{obj.message}}</div>',
+  props: {
+    num: {
+      type: Number,
+      required: true
+    },
+    str: {
+      type: String,
+      default: "안녕"
+    },
+    obj: {
+      type: Object,
+      default: ()=>{
+          return {message: "안녕 객체로부터"}
+      }
+    },
+    even: {
+      validator: (value) => {
+        return (value % 2) === 0
+      }
+    }
+  }
+}
